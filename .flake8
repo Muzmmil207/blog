@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 120
+exclude = 
+    __init__.py, 
+    *env, 
+    core/settings/*.py
+    __pycache__
+    apps.py

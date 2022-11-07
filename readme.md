@@ -1,17 +1,28 @@
-
+## Tree
 ```
 C:.
 ├───apps
+│   ├───authors
+│   │   ├───migrations
+│   │   │   └───__pycache__
+│   │   └───__pycache__
 │   ├───blog
 │   │   ├───migrations
-│   │   └───tests
+│   │   │   └───__pycache__
+│   │   ├───tests
+│   │   └───__pycache__
 │   └───dashboard
 │       ├───migrations
 │       │   └───__pycache__
+│       ├───models
 │       ├───tests
 │       └───__pycache__
 ├───core
 │   ├───settings
+│   │   └───__pycache__
 │   └───__pycache__
-└───templates
+├───templates
+└───utils
+    └───models
+        └───__pycache__
 ```

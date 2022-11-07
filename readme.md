@@ -1,6 +1,7 @@
-## Tree
+## The Project Tree
 ```
 C:.
+├───.vscode
 ├───apps
 │   ├───authors
 │   │   ├───migrations
@@ -14,13 +15,13 @@ C:.
 │   └───dashboard
 │       ├───migrations
 │       │   └───__pycache__
-│       ├───models
 │       ├───tests
 │       └───__pycache__
 ├───core
 │   ├───settings
 │   │   └───__pycache__
 │   └───__pycache__
+├───static
 ├───templates
 └───utils
     └───models

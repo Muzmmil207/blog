@@ -1,11 +1,16 @@
+import os
 from pathlib import Path
+
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r95t1)uj-7j#!($k!mqz4&ns%fah*l8lqze0ej4*_)ii%i$86l"
@@ -25,9 +30,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # My apps
     'apps.authors',
     'apps.dashboard',
     'apps.blog',
+    # Third part apps
     'ckeditor',
 ]
 
@@ -72,6 +79,7 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "authors.Author"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -113,20 +121,24 @@ STATIC_URL = 'static/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = 'media/'
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-APPS = BASE_DIR / "apps"
-AUTH_USER_MODEL = "authors.Author"
-# LOGIN_REDIRECT_URL = '/customer/dashboard/'
-# LOGIN_URL = '/customer/login/'
 
 # Email setting
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+RECIPIENT_ADDRESS= env('RECIPIENT_ADDRESS')
+EMAIL_USE_TLS = True
+
+# ckeditor configurations
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': '100%',
+    },
+}
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

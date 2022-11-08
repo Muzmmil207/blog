@@ -1,7 +1,8 @@
+# A Blog project by Django
+                    ..................
 ## The Project Tree
 ```
 C:.
-├───.vscode
 ├───apps
 │   ├───authors
 │   │   ├───migrations

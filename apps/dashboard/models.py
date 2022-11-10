@@ -85,7 +85,6 @@ class Post(AbstractModel):
     tags = models.ManyToManyField(
         PostTags,
         blank=True,
-        null=True,
         related_name="tags"
     )
     slug = models.SlugField(
@@ -121,10 +120,19 @@ class Post(AbstractModel):
     def __str__(self):
         return self.title
 
+    @property
+    def post_img(self):
+        try:
+            image = self.images.filter(is_main=True).first()
+            img_url = image.image.url
+        except:
+            img_url = ''
+        return img_url
+
 
 class PostImage(models.Model):
     """
-    The Post Images table.
+    The Post Image table.
     """
     post = models.ForeignKey(
         Post,
@@ -147,7 +155,7 @@ class PostImage(models.Model):
         ordering = ["-id"]
 
     def __str__(self):
-        return self.post
+        return self.post.title
 
 
 class PostMeta(models.Model):
@@ -170,7 +178,7 @@ class PostMeta(models.Model):
     )
 
     def __str__(self):
-        return self.post
+        return self.post.title
 
 
 class PostComment(models.Model):

@@ -8,9 +8,9 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Build paths inside the project like this: BASE_DIR / "subdir".
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r95t1)uj-7j#!($k!mqz4&ns%fah*l8lqze0ej4*_)ii%i$86l"
@@ -31,11 +31,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # My apps
-    'apps.authors',
-    'apps.dashboard',
-    'apps.blog',
+    "apps.authors",
+    "apps.dashboard",
+    "apps.blog",
+    "apps.api",
     # Third part apps
-    'ckeditor',
+    "rest_framework",
+    "ckeditor",
 ]
 
 MIDDLEWARE = [
@@ -53,7 +55,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -61,6 +63,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+
+                "apps.dashboard.context_processors.categories",
             ],
         },
     },
@@ -114,29 +118,29 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_DIRS = [BASE_DIR /'static']
-STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR /"static"]
+STATIC_URL = "static/"
 
 # Media
-MEDIA_ROOT = BASE_DIR / 'media'
-MEDIA_URL = 'media/'
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "media/"
 
 
 # Email setting
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-RECIPIENT_ADDRESS= env('RECIPIENT_ADDRESS')
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+RECIPIENT_ADDRESS= env("RECIPIENT_ADDRESS")
 EMAIL_USE_TLS = True
 
 # ckeditor configurations
 CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': '100%',
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": "100%",
     },
 }
 

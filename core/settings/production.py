@@ -2,10 +2,10 @@ from .base import *
 
 # debug_toolbar settings
 if DEBUG:
-    INTERNAL_IPS = ("127.0.0.1",)
-    MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
+    INTERNAL_IPS = ["127.0.0.1",]
+    MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware",]
 
-    INSTALLED_APPS += ("debug_toolbar",)
+    INSTALLED_APPS += ["debug_toolbar",]
 
     DEBUG_TOOLBAR_PANELS = [
         "debug_toolbar.panels.versions.VersionsPanel",

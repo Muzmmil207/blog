@@ -158,7 +158,9 @@
     <div class="aside-block">
       <h3 class="aside-title">Tags</h3>
       <ul class="aside-tags list-unstyled">
-        <li><a href="category.html">Business</a></li>
+        {% for tag in tags %}
+        <li><a href="category.html">{{tag.name}}</a></li>
+        {% endfor %}
       </ul>
     </div><!-- End Tags -->
 

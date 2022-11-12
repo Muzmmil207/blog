@@ -1,25 +1,24 @@
 {% extends 'base.html' %}
 {% block content %}
+{% block title %}{% endblock %}
   <main id="main">
-    <section>
+
+    <!-- ======= Search Results ======= -->
+    <section id="search-result" class="search-result">
       <div class="container">
         <div class="row">
-
-          <div class="col-md-9" data-aos="fade-up">
-            <h3 class="category-title">
-              Category:
-              {% for category in categories %}
-              {% if category.slug in request.get_full_path %} {{category.name}} {% endif %}
-              {% endfor %}
-            </h3>
+          <div class="col-md-9">
+            <h3 class="category-title">Search Results</h3>
+            {{posts}}
             {% for post in posts %}
-            <div class="d-md-flex post-entry-2 half">
-              <a href="{% url 'single_post' post.slug %}" class="me-4 thumbnail">
+
+            <div class="d-md-flex post-entry-2 small-img">
+              <a href="{% url 'single_post' 'postslug' %}" class="me-4 thumbnail">
                 <img src="{{post.post_img}}" alt="" class="img-fluid">
               </a>
               <div>
-                <div class="post-meta"><span class="mx-1">&bullet;</span> <span>{{post.published_at|date:'SHORT_DATE_FORMAT'}}</span></div>
-                <h3><a href="{% url 'single_post' post.slug %}">{{post.title}}</a></h3>
+                <div class="post-meta"><span class="date">{{post.category}}</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
+                <h3><a href="{% url 'single_post' 'postslug' %}">{{post.title}}</a></h3>
                 <p>{{post.summary}}</p>
                 <div class="d-flex align-items-center author">
                   <div class="name">
@@ -29,6 +28,7 @@
               </div>
             </div>
             {% endfor %}
+            <!-- Paging -->
             <div class="text-start py-4">
               <div class="custom-pagination">
                 <a href="#" class="prev">Prevous</a>
@@ -39,13 +39,17 @@
                 <a href="#">5</a>
                 <a href="#" class="next">Next</a>
               </div>
-            </div>
+            </div><!-- End Paging -->
+
           </div>
-            <!-- ======= Sidebar ======= -->
-            {% include 'parts/sidebar.html' %}
+
+                      <!-- ======= Sidebar ======= -->
+                      {% include 'parts/sidebar.html' %}
 
         </div>
       </div>
-    </section>
+    </section> <!-- End Search Result -->
+
   </main><!-- End #main -->
+
   {% endblock %}

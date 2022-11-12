@@ -3,7 +3,7 @@ from ckeditor.fields import RichTextField
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from utils.models.fields import AbstractModel
+from utils.models.models_fields import AbstractModel
 
 
 class Category(AbstractModel):
@@ -68,6 +68,15 @@ class PostTags(AbstractModel):
 
 
 class Post(AbstractModel):
+    class PublishedManager(models.Manager):
+        ''' Custom manager for published posts. '''
+
+        def get_queryset(self):
+            return super().get_queryset().filter(is_published=True)
+    
+    objects = models.Manager()  # The default manager
+    published = PublishedManager()  # Custom manager
+
     title = models.CharField(
         max_length=255,
         verbose_name=_("Post Title"),
@@ -81,6 +90,7 @@ class Post(AbstractModel):
     category = models.ForeignKey(
         Category,
         on_delete=models.PROTECT,
+        related_name="categories"
     )
     tags = models.ManyToManyField(
         PostTags,

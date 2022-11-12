@@ -15,7 +15,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = "django-insecure-r95t1)uj-7j#!($k!mqz4&ns%fah*l8lqze0ej4*_)ii%i$86l"
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: don"t run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -34,10 +34,10 @@ INSTALLED_APPS = [
     "apps.authors",
     "apps.dashboard",
     "apps.blog",
-    "apps.api",
+    "apps.search",
     # Third part apps
-    "rest_framework",
     "ckeditor",
+    "django_elasticsearch_dsl",
 ]
 
 MIDDLEWARE = [
@@ -65,6 +65,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
 
                 "apps.dashboard.context_processors.categories",
+                "apps.dashboard.context_processors.tags",
             ],
         },
     },
@@ -144,5 +145,10 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+ELASTICSEARCH_DSL={
+    "default": {
+        "hosts": "localhost:9200"
+    },
+}
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

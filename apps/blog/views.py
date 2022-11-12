@@ -1,19 +1,33 @@
-import requests
-
-from apps.dashboard.models import Post
-from django.shortcuts import render
+from apps.dashboard.models import Category, Post, PostComment
+from django.shortcuts import redirect, render
 
 # Create your views here.
 
 def main_page(request):
-    posts = Post.objects.all()
+    posts = Post.published.all()[:6].select_related("author")
 
-    context = {'data': posts}
+    context = {"data": posts}
     return render(request, "apps/blog/home.html", context)
 
 
 def single_post(request, slug):
     post = Post.objects.filter(slug=slug).first()
+    if request.POST:
+        PostComment.objects.create(
+            post=post,
+            name=request.POST.get("name"),
+            email=request.POST.get("email"),
+            comment=request.POST.get("comment"),
+        )
+        return redirect("single_post", slug=slug)
+    comments = PostComment.objects.filter(post=post)
+    context = {"post": post, "comments": comments}
+    return render(request, "apps/blog/single-post.html", context)
 
-    context = {'post': post}
-    return render(request, 'apps/blog/single-post.html', context)
+
+def categories(request, slug):
+    posts = Post.published.filter(category__name=slug).select_related("author")
+    
+    context = {"posts": posts}
+    return render(request, "apps/blog/category.html", context)
+

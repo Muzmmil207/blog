@@ -1,0 +1,9 @@
+{% autoescape off %}
+
+{{name}} with email {{email}} has said: 
+{{comment}}
+--------------------------
+you can view the post via:
+http://127.0.0.1:8000/{% url 'single_post' slug=slug %}
+
+{% endautoescape %}

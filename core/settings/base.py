@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     # Third part apps
     "ckeditor",
     "django_elasticsearch_dsl",
+    "django_apscheduler",
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,7 @@ MEDIA_URL = "media/"
 
 
 # Email setting
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")

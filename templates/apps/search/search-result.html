@@ -9,16 +9,15 @@
         <div class="row">
           <div class="col-md-9">
             <h3 class="category-title">Search Results</h3>
-            {{posts}}
             {% for post in posts %}
 
             <div class="d-md-flex post-entry-2 small-img">
-              <a href="{% url 'single_post' 'postslug' %}" class="me-4 thumbnail">
+              <a href="{% url 'single_post' post.slug %}" class="me-4 thumbnail">
                 <img src="{{post.post_img}}" alt="" class="img-fluid">
               </a>
               <div>
                 <div class="post-meta"><span class="date">{{post.category}}</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div>
-                <h3><a href="{% url 'single_post' 'postslug' %}">{{post.title}}</a></h3>
+                <h3><a href="{% url 'single_post' post.slug %}">{{post.title}}</a></h3>
                 <p>{{post.summary}}</p>
                 <div class="d-flex align-items-center author">
                   <div class="name">

@@ -1,6 +1,7 @@
 from ckeditor.fields import RichTextField
 
 from django.db import models
+from django.db.models import F
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
 from utils.models.models_fields import AbstractModel
@@ -125,10 +126,17 @@ class Post(AbstractModel):
         verbose_name=_("Published At"),
         help_text=_("It stores the date and time at which the post is Published.")
     )
+    reading_times = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Reading Times"),
+        help_text=_("Increasing positive number to calculate the reading times.") 
+    )
+    trending = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Trending"),
+        help_text=_("Increasing positive number to calculate the reading times.") 
+    )
     content = RichTextField()
-
-    def __str__(self):
-        return self.title
 
     @property
     def post_img(self):
@@ -139,6 +147,21 @@ class Post(AbstractModel):
             img_url = ''
         return img_url
 
+    def __str__(self):
+        return self.title
+
+    def plus_one(self, request):
+        """
+        this method in the 
+        """
+        if  request.session.get('ids') is None:
+            request.session['ids'] = []
+        
+        if not self.id in request.session['ids']:
+            self.reading_times=F("reading_times") + 1
+            self.trending=F("trending") + 1
+            request.session['ids'].append(self.id) 
+            self.save()
 
 class PostImage(models.Model):
     """

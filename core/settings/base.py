@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     # Third part apps
     "ckeditor",
     "django_elasticsearch_dsl",
-    "django_apscheduler",
 ]
 
 MIDDLEWARE = [

@@ -65,6 +65,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
 
+                "apps.dashboard.context_processors.posts_filters",
                 "apps.dashboard.context_processors.categories",
                 "apps.dashboard.context_processors.tags",
             ],
@@ -78,10 +79,29 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env("DB_NAME"),
+        'USER': env("DB_USER"),
+        'PASSWORD': env("DB_PASSWORD"),
+        'HOST': env("DB_HOST"),
+        'PORT': env("DB_PORT"),
+    }
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+       
     }
 }
 
@@ -117,7 +137,17 @@ USE_I18N = True
 
 USE_TZ = True
 
+############
+# SESSIONS #
+############
+# Age of cookie, in seconds 52 weeks
+SESSION_COOKIE_AGE = 31449600
 
+# Whether to save the session data on every request.
+SESSION_SAVE_EVERY_REQUEST = False
+
+# Whether a user's session cookie expires when the web browser is closed.
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = [BASE_DIR /"static"]
@@ -138,6 +168,9 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 RECIPIENT_ADDRESS= env("RECIPIENT_ADDRESS")
 EMAIL_USE_TLS = True
 
+# Default primary key field type
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
 # ckeditor configurations
 CKEDITOR_CONFIGS = {
     "default": {
@@ -152,5 +185,6 @@ ELASTICSEARCH_DSL={
         "hosts": "localhost:9200"
     },
 }
-# Default primary key field type
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CELERY_BROKER_URL = "redis://localhost:6379"
+CELERY_RESULT_BACKEND = "redis://localhost:6379"

@@ -8,21 +8,21 @@ from .models import PostComment
 
 
 @receiver(post_save, sender=PostComment)
-def new_comment(sender, instance, **kwargs):
-
-    post =  instance.post
-
-    subject = f"New Comment in: {post.title}"
-    message = render_to_string('apps/dashboard/new-post-comment.html', {
-        'name': instance.name,
-        'comment': instance.comment,
-        'email': instance.email,
-        'slug': post.slug,
-    })
-    send_mail(
-        subject,
-        message,
-        settings.EMAIL_HOST_USER,
-        [post.author.email],
-        fail_silently=False,
-    )
+def new_comment(sender, instance, created, **kwargs):
+    if created:
+        post =  instance.post
+        subject = f"New comment in: {post.title}"
+        
+        message = render_to_string('apps/dashboard/new-post-comment.html', {
+            'name': instance.name,
+            'comment': instance.comment,
+            'email': instance.email,
+            'slug': post.slug,
+        })
+        send_mail(
+            subject,
+            message,
+            settings.EMAIL_HOST_USER,
+            [post.author.email],
+            fail_silently=False,
+        )

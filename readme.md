@@ -13,17 +13,44 @@ C:.
 │   │   │   └───__pycache__
 │   │   ├───tests
 │   │   └───__pycache__
-│   └───dashboard
+│   ├───dashboard
+│   │   ├───management
+│   │   │   └───commands
+│   │   ├───migrations
+│   │   │   └───__pycache__
+│   │   ├───tests
+│   │   └───__pycache__
+│   └───search
 │       ├───migrations
 │       │   └───__pycache__
-│       ├───tests
 │       └───__pycache__
 ├───core
 │   ├───settings
 │   │   └───__pycache__
 │   └───__pycache__
+├───media
+│   └───images
 ├───static
+│   └───assets
+│       ├───css
+│       ├───img
+│       ├───js
+│       └───vendor
+│           ├───bootstrap
+│           │   ├───css
+│           │   └───js
+│           ├───bootstrap-icons
+│           │   └───fonts
+│           ├───glightbox
+│           │   ├───css
+│           │   └───js
+│           └───swiper
 ├───templates
+│   ├───apps
+│   │   ├───blog
+│   │   ├───dashboard
+│   │   └───search
+│   └───parts
 └───utils
     └───models
         └───__pycache__

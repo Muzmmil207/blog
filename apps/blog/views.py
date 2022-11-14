@@ -1,8 +1,8 @@
 from apps.dashboard.models import Category, Post, PostComment
-from django.db.models import Count
+from django.db.models import Count, Value
 from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
 
-# Create your views here.
 
 def main_page(request):
     posts = Post.published.all()[:6].select_related("author")
@@ -10,7 +10,7 @@ def main_page(request):
     context = {"data": posts}
     return render(request, "apps/blog/home.html", context)
 
-
+@cache_page(60 * 15)
 def single_post(request, slug):
     post = Post.objects.filter(slug=slug).annotate(
             comments_number=Count("postcomment")
@@ -32,6 +32,7 @@ def single_post(request, slug):
     return render(request, "apps/blog/single-post.html", context)
 
 
+@cache_page(60 * 15)
 def categories(request, slug):
     posts = Post.published.filter(category__name=slug)
     

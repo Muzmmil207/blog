@@ -136,18 +136,13 @@ USE_I18N = True
 
 USE_TZ = True
 
-############
-# SESSIONS #
-############
+# SESSIONS 
 # Age of cookie, in seconds 52 weeks
 SESSION_COOKIE_AGE = 31449600
-
 # Whether to save the session data on every request.
 SESSION_SAVE_EVERY_REQUEST = False
-
 # Whether a user's session cookie expires when the web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = [BASE_DIR /"static"]
 STATIC_URL = "static/"
@@ -187,3 +182,7 @@ ELASTICSEARCH_DSL={
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
+CELERY_ACCEPT_CONTENT = ['application/json']  
+CELERY_TASK_SERIALIZER = 'json'  
+CELERY_RESULT_SERIALIZER = 'json'  
+CELERY_TIMEZONE = "Africa/Sudan"

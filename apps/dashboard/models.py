@@ -163,6 +163,7 @@ class Post(AbstractModel):
             request.session['ids'].append(self.id) 
             self.save()
 
+
 class PostImage(models.Model):
     """
     The Post Image table.

@@ -5,29 +5,17 @@
 C:.
 ├───apps
 │   ├───authors
-│   │   ├───migrations
-│   │   │   └───__pycache__
-│   │   └───__pycache__
+│   │   └───migrations
 │   ├───blog
 │   │   ├───migrations
-│   │   │   └───__pycache__
-│   │   ├───tests
-│   │   └───__pycache__
+│   │   └───tests
 │   ├───dashboard
-│   │   ├───management
-│   │   │   └───commands
 │   │   ├───migrations
-│   │   │   └───__pycache__
-│   │   ├───tests
-│   │   └───__pycache__
+│   │   └───tests
 │   └───search
-│       ├───migrations
-│       │   └───__pycache__
-│       └───__pycache__
+│       └───migrations
 ├───core
-│   ├───settings
-│   │   └───__pycache__
-│   └───__pycache__
+│   └───settings
 ├───media
 │   └───images
 ├───static
@@ -53,5 +41,4 @@ C:.
 │   └───parts
 └───utils
     └───models
-        └───__pycache__
 ```

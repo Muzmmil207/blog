@@ -15,6 +15,7 @@ def single_post(request, slug):
     post = Post.objects.filter(slug=slug).annotate(
             comments_number=Count("postcomment")
         ).first()
+    if post is None: return redirect("main")
     post.plus_one(request)
 
     if request.POST:

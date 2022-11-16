@@ -5,4 +5,3 @@ exclude =
     *env, 
     core/settings/*.py
     __pycache__
-    apps.py

@@ -12,10 +12,12 @@ def main_page(request):
 
 @cache_page(60 * 15)
 def single_post(request, slug):
-    post = Post.objects.filter(slug=slug).annotate(
-            comments_number=Count("postcomment")
-        ).first()
-    if post is None: return redirect("main")
+    try:
+        post = Post.objects.annotate(
+                comments_number=Count("postcomment")
+            ).get(slug=slug)
+    except Post.DoesNotExist:
+        return redirect("main")
     post.plus_one(request)
 
     if request.POST:
@@ -35,7 +37,7 @@ def single_post(request, slug):
 
 @cache_page(60 * 15)
 def categories(request, slug):
-    posts = Post.published.filter(category__name=slug)
+    posts = Post.published.filter(category__slug=slug)
     
     context = {"posts": posts}
     return render(request, "apps/blog/category.html", context)

@@ -15,7 +15,8 @@ class Category(AbstractModel):
         max_length=100,
         verbose_name=_("category name"),
         help_text=_("format: required, max-100"),
-        db_index=True
+        db_index=True,
+        unique=True
     )
     slug = models.SlugField(
         max_length=150,
@@ -23,6 +24,7 @@ class Category(AbstractModel):
         help_text=_(
             "format: required, letters, numbers, underscore, or hyphens"
         ),
+        unique=True
     )
     parent = models.ForeignKey(
         "self",
@@ -50,7 +52,8 @@ class PostTags(AbstractModel):
         max_length=50,
         verbose_name=_("Tag name"),
         help_text=_("format: required, max-50"),
-        db_index=True
+        db_index=True,
+        unique=True
     )
     slug = models.SlugField(
         max_length=150,
@@ -58,6 +61,7 @@ class PostTags(AbstractModel):
         help_text=_(
             "format: required, letters, numbers, underscore, or hyphens"
         ),
+        unique=True
     )
 
     class Meta:
@@ -81,12 +85,14 @@ class Post(AbstractModel):
     title = models.CharField(
         max_length=255,
         verbose_name=_("Post Title"),
-        db_index=True
+        db_index=True,
+        unique=True
     )
     meta_title = models.CharField(
         max_length=255,
         verbose_name=_("Meta Title"),
-        help_text=_("The meta title to be used for browser title and SEO.")
+        help_text=_("The meta title to be used for browser title and SEO."),
+        unique=True
     )
     category = models.ForeignKey(
         Category,
@@ -101,7 +107,8 @@ class Post(AbstractModel):
     slug = models.SlugField(
         max_length=255,
         verbose_name=_("Slug"),
-        help_text=_("The post slug to form URL.")
+        help_text=_("The post slug to form URL."),
+        unique=True
     )
     parent = models.ForeignKey(
         "self",
@@ -149,11 +156,14 @@ class Post(AbstractModel):
 
     def __str__(self):
         return self.title
-
+        
+    def save(self, *args, **kwargs):
+        author = self.author
+        author.last_activity =  self.updated_at
+        author.save()
+        super().save(*args, **kwargs)
+    
     def plus_one(self, request):
-        """
-        this method in the 
-        """
         if  request.session.get('ids') is None:
             request.session['ids'] = []
         
@@ -197,9 +207,10 @@ class PostMeta(models.Model):
     The Post Meta Table can be used to store additional information of a post
     including the post banner URL etc.
     """
-    post = models.ForeignKey(
+    post = models.OneToOneField(
         Post,
         on_delete=models.CASCADE,
+        unique=True
     )
     key = models.CharField(
         max_length=50,

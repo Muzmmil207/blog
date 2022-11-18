@@ -86,20 +86,20 @@ WSGI_APPLICATION = "core.wsgi.application"
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
        
     }
 }
@@ -141,7 +141,7 @@ USE_TZ = True
 SESSION_COOKIE_AGE = 31449600
 # Whether to save the session data on every request.
 SESSION_SAVE_EVERY_REQUEST = False
-# Whether a user's session cookie expires when the web browser is closed.
+# Whether a user"s session cookie expires when the web browser is closed.
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # Static files (CSS, JavaScript, Images)
 STATICFILES_DIRS = [BASE_DIR /"static"]
@@ -153,7 +153,7 @@ MEDIA_URL = "media/"
 
 
 # Email setting
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env("EMAIL_HOST")
 EMAIL_PORT = env("EMAIL_PORT")
@@ -174,7 +174,7 @@ CKEDITOR_CONFIGS = {
     },
 }
 
-ELASTICSEARCH_DSL={
+ELASTICSEARCH_DSL = {
     "default": {
         "hosts": "localhost:9200"
     },
@@ -182,7 +182,7 @@ ELASTICSEARCH_DSL={
 
 CELERY_BROKER_URL = "redis://localhost:6379"
 CELERY_RESULT_BACKEND = "redis://localhost:6379"
-CELERY_ACCEPT_CONTENT = ['application/json']  
-CELERY_TASK_SERIALIZER = 'json'  
-CELERY_RESULT_SERIALIZER = 'json'  
+CELERY_ACCEPT_CONTENT = ["application/json"]  
+CELERY_TASK_SERIALIZER = "json"  
+CELERY_RESULT_SERIALIZER = "json"  
 CELERY_TIMEZONE = "Africa/Sudan"

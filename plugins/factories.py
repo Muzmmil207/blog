@@ -23,7 +23,8 @@ class AuthorFactory(factory.django.DjangoModelFactory):
     email = factory.LazyAttribute(lambda a: "{0}.{1}@example.com".format(a.first_name, a.last_name).lower())
     first_name = factory.Faker("first_name")
     last_name = factory.Faker("last_name")
-    mobile_number = factory.Sequence(lambda n: "+249011333672%d" % n)
+    mobile_number = factory.Sequence(lambda n: "+2490113336720%d" % n)
+
 
 class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:

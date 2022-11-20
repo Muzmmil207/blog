@@ -17,6 +17,7 @@ def test_category_db(db, db_fixture_setup, id, name, slug):
     assert str(cat) == name
 
 
+@pytest.mark.category_db
 @pytest.mark.parametrize(
     "name, slug",
     [
@@ -77,3 +78,10 @@ def test_post_db(
     assert post.tags.all().count() == 3
     assert post.reading_times == 213
     assert post.trending == 0
+
+
+def test_post_model(db, post_factory, author_factory):
+
+    post_factory.create()
+    assert Post.published.count() == 1
+

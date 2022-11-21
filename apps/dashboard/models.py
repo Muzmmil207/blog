@@ -170,8 +170,8 @@ class Post(AbstractModel):
         if not self.id in request.session['ids']:
             self.reading_times=F("reading_times") + 1
             self.trending=F("trending") + 1
-            request.session['ids'].append(self.id) 
             self.save()
+            request.session['ids'].append(self.id) 
 
 
 class PostImage(models.Model):

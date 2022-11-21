@@ -4,7 +4,7 @@ from django_elasticsearch_dsl.registries import registry
 from apps.dashboard.models import Category, Post
 
 
-#@registry.register_document
+@registry.register_document
 class PostDocument(Document):
     category = fields.ObjectField(
         properties={'name': fields.TextField()}

@@ -14,13 +14,13 @@ class SearchPost(ListView):
     template_name = "apps/search/search-result.html"
     search_document = PostDocument
 
-    # def get_queryset(self):
-    #     if self.request.GET:
-    #         try:
-    #             q = self.request.GET('data')
+    def get_queryset(self):
+        if self.request.GET:
+            try:
+                q = self.request.GET('data')
                 
-    #             return self.search_document.search().filter(title=q)
+                return self.search_document.search().filter(title=q)
 
-    #         except Exception as e:
-    #             return HttpResponse(e, status=500)
-    #     return self.search_document.search().filter(title='')
+            except Exception as e:
+                return HttpResponse(e, status=500)
+        return self.search_document.search().filter(title='')

@@ -1,7 +1,12 @@
+from importlib import import_module
+
 import pytest
 
 from apps.authors.models import Author
+from apps.blog.views import single_post
 from apps.dashboard.models import Category, Post
+from django.conf import settings
+from django.http import HttpRequest
 
 
 @pytest.mark.parametrize(
@@ -69,7 +74,14 @@ def test_post_db(
     post = Post.objects.get(id=id)
     author = Author.objects.get(id=author)
     cat = Category.objects.get(id=category)
-  
+    # test .plus_one() Post method
+    request = HttpRequest()
+    engine = import_module(settings.SESSION_ENGINE)
+    request.session = engine.SessionStore()
+    assert request.session.get('ids') is None
+    response = single_post(request, post.slug)
+    assert request.session.get('ids') == [1]
+
     assert str(post) == title
     assert post.author == author
     assert post.meta_title == meta_title
@@ -81,7 +93,9 @@ def test_post_db(
 
 
 def test_post_model(db, post_factory, author_factory):
-
+    post = Post.objects.get(id=1)
     post_factory.create()
+
     assert Post.published.count() == 1
+    assert post.post_img == ''
 

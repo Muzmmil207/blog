@@ -1,26 +1,29 @@
 from elasticsearch_dsl import Q
 
-from apps.dashboard.models import Post
+from apps.search.documents import PostDocument
 from django.http import HttpResponse
-from django.shortcuts import render
 from django.views.generic import ListView
-
-from .documents import PostDocument
 
 
 class SearchPost(ListView):
-    model = Post
-    context_object_name = 'posts'
+    context_object_name = "posts"
     template_name = "apps/search/search-result.html"
-    search_document = PostDocument
+    search_document = PostDocument()
 
     def get_queryset(self):
+
         if self.request.GET:
+            search = self.request.GET.get("search")
             try:
-                q = self.request.GET('data')
-                
-                return self.search_document.search().filter(title=q)
+                q = Q(
+                "multi_match",
+                query=search,
+                fields=["title", "summary", "slug", "category", "tags"],
+                fuzziness="auto",
+            )
+                return self.search_document.search().query(q)
 
             except Exception as e:
                 return HttpResponse(e, status=500)
-        return self.search_document.search().filter(title='')
+
+        return self.search_document.search()

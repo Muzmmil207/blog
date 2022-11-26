@@ -20,6 +20,8 @@ class SearchPost(ListView):
                 query=search,
                 fields=["title", "summary", "slug", "category", "tags"],
                 fuzziness="auto",
+            ) & Q(
+                should=[Q("match", is_published=True)]
             )
                 return self.search_document.search().query(q)
 
